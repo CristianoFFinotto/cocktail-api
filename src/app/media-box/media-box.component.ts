@@ -13,7 +13,6 @@ export class MediaBoxComponent implements OnInit {
   ngOnInit(): void {}
 
   handleOnInfo(id: string) {
-    this.api.searchDrinkById(id);
     this.router.navigateByUrl(`/drink/${id}`);
   }
 }
