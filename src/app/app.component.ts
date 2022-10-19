@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterContentInit, Component, OnInit } from '@angular/core';
 import { APIService } from './api.service';
 
 @Component({
@@ -7,9 +7,9 @@ import { APIService } from './api.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  constructor(private api: APIService) {}
+  constructor(public api: APIService) {}
 
   ngOnInit(): void {
-    this.api.getDrinks();
+    /* this.api.getDrinks(); */
   }
 }

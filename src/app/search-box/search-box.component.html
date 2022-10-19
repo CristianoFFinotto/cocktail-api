@@ -1,1 +1,9 @@
-<p>search-box works!</p>
+<div class="container">
+  <form (submit)="handleOnSubmit($event)" [formGroup]="this.formGroup">
+    <mat-form-field appearance="fill">
+      <mat-label>Insert drink name</mat-label>
+      <input matInput placeholder="" formControlName="drinkName" />
+    </mat-form-field>
+    <button mat-flat-button color="primary">Search</button>
+  </form>
+</div>
