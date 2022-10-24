@@ -1,10 +1,12 @@
 import { DetailDrinkComponent } from './detail-drink/detail-drink.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MediaBoxComponent } from './media-box/media-box.component';
+import { HomeComponent } from './pages/home/home.component';
+import { FilterComponent } from './filter/filter.component';
 
 const routes: Routes = [
-  { path: '', component: MediaBoxComponent, pathMatch: 'full' },
+  { path: '', component: HomeComponent, pathMatch: 'full' },
+  { path: 'filter', component: FilterComponent, pathMatch: 'full' },
   { path: 'drink/:id', component: DetailDrinkComponent, pathMatch: 'full' },
   { path: '**', redirectTo: '' },
 ];

@@ -4,3 +4,7 @@
 <p>{{ api.drinkDetail?.alcoholic }}</p>
 <p>{{ api.drinkDetail?.instructions }}</p>
 <img [src]="api.drinkDetail?.image" alt="drink" width="300" height="300" />
+<p>Ingredients:</p>
+<li *ngFor="let ingredient of api.drinkDetail?.ingredients">
+  {{ ingredient }}
+</li>

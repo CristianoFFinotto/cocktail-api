@@ -1,4 +1,3 @@
-<app-search-box></app-search-box>
 <div *ngIf="api.drinksList" class="container">
   <mat-card class="example-card" *ngFor="let drink of api.drinksList">
     <mat-card-header>
@@ -6,7 +5,9 @@
       <mat-card-title class="example-header-title">{{
         drink.name
       }}</mat-card-title>
-      <mat-card-subtitle>{{ drink.id }}</mat-card-subtitle>
+      <mat-card-subtitle style="color: whitesmoke">{{
+        drink.category
+      }}</mat-card-subtitle>
     </mat-card-header>
     <img mat-card-image src="{{ drink.image }}" alt="Photo drink" />
     <mat-card-actions class="example-actions">

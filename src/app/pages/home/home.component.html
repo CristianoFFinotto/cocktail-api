@@ -1,0 +1,9 @@
+<mat-toolbar style="display: flex; justify-content: space-between">
+  <span>Cocktail Application</span>
+  <button mat-flat-button color="primary" (click)="onSearch()">Search</button>
+</mat-toolbar>
+<mat-tab-group (selectedTabChange)="onChangeLetter($event)">
+  <mat-tab *ngFor="let letter of letters" [label]="letter" class="mat-tab-label"
+    ><app-media-box></app-media-box
+  ></mat-tab>
+</mat-tab-group>
