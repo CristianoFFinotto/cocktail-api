@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ResolveEnd } from '@angular/router';
+import { Subject, switchMap } from 'rxjs';
 
-type CocktailListApi = {
-  drinks: [
+export type CocktailListApi = {
+  drinks?: [
     {
       idDrink: string;
       strDrink: string;
@@ -11,15 +13,19 @@ type CocktailListApi = {
     }
   ];
 };
-type CocktailList = {
+
+export type CocktailList = {
   id: string;
   name: string;
-  category: string;
+  category?: string;
   image: string;
+  alcoholic?: string;
+  instructions?: string;
+  ingredients?: string[];
 };
 
-type CocktailDetailApi = {
-  drinks: [
+export type CocktailApiById = {
+  drinks?: [
     {
       idDrink: string;
       strDrink: string;
@@ -46,18 +52,8 @@ type CocktailDetailApi = {
   ];
 };
 
-type CocktailDetail = {
-  id: string;
-  name: string;
-  category: string;
-  alcoholic: string;
-  instructions: string;
-  image: string;
-  ingredients: (string | undefined)[];
-};
-
-type CocktailSearchByIngredientApi = {
-  drinks: [
+export type CocktailByIngredientApi = {
+  drinks?: [
     {
       idDrink: string;
       strDrink: string;
@@ -66,98 +62,98 @@ type CocktailSearchByIngredientApi = {
   ];
 };
 
-type CocktailSearchByIngredient = {
-  id: string;
-  name: string;
-  image: string;
-}[];
-
 @Injectable({
   providedIn: 'root',
 })
 export class APIService {
   constructor(private http: HttpClient) {}
 
-  drinksListApi: CocktailListApi | undefined;
+  drinks: CocktailList[] | undefined = undefined;
 
-  drinksList: CocktailList[] | undefined;
-
-  drinkDetailApi: CocktailDetailApi | undefined;
-
-  drinkDetail: CocktailDetail | undefined;
-
-  drinkListByIngredient: CocktailSearchByIngredient | undefined;
-
-  searchDrinks(drink: string) {
+  setDrinksByName(drink: string): void {
     this.http
       .get(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${drink}`)
       .subscribe((response) => {
-        this.drinksListApi = response as CocktailListApi;
-        this.drinksList = this.drinksListApi.drinks.map((drink) => ({
-          id: drink.idDrink,
-          name: drink.strDrink,
-          category: drink.strCategory,
-          image: drink.strDrinkThumb,
-        }));
+        let responseApi = response as CocktailListApi;
+        this.drinks = responseApi.drinks
+          ? responseApi.drinks!.map((drink) => ({
+              id: drink.idDrink,
+              name: drink.strDrink,
+              category: drink.strCategory,
+              image: drink.strDrinkThumb,
+            }))
+          : undefined;
       });
   }
 
-  searchDrinkById(id: string) {
+  setDrinkById(id: string): void {
     this.http
       .get(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`)
       .subscribe((response) => {
-        this.drinkDetailApi = response as CocktailDetailApi;
-        this.drinkDetail = {
-          id: this.drinkDetailApi.drinks[0].idDrink,
-          name: this.drinkDetailApi.drinks[0].strDrink,
-          category: this.drinkDetailApi.drinks[0].strCategory,
-          alcoholic: this.drinkDetailApi.drinks[0].strAlcoholic,
-          instructions: this.drinkDetailApi.drinks[0].strInstructions,
-          image: this.drinkDetailApi.drinks[0].strDrinkThumb,
-          ingredients: Object.keys(this.drinkDetailApi.drinks[0])
-            .filter(
-              (key) =>
-                key.includes('Ingredient') &&
-                this.drinkDetailApi?.drinks[0][
-                  key as keyof typeof this.drinkDetailApi.drinks[0]
-                ]
-            )
-            .map(
-              (key) =>
-                this.drinkDetailApi?.drinks[0][
-                  key as keyof typeof this.drinkDetailApi.drinks[0]
-                ]
-            ),
-        };
+        let responseApi = response as CocktailApiById;
+        this.drinks = responseApi.drinks
+          ? [
+              {
+                id: responseApi.drinks![0].idDrink,
+                name: responseApi.drinks![0].strDrink,
+                category: responseApi.drinks![0].strCategory,
+                alcoholic: responseApi.drinks![0].strAlcoholic,
+                instructions: responseApi.drinks![0].strInstructions,
+                image: responseApi.drinks![0].strDrinkThumb,
+                ingredients: Object.keys(responseApi.drinks![0])
+                  .filter(
+                    (key) =>
+                      key.includes('Ingredient') &&
+                      responseApi.drinks![0][
+                        key as keyof typeof responseApi.drinks[0]
+                      ]
+                  )
+                  .map(
+                    (key) =>
+                      responseApi.drinks![0][
+                        key as keyof typeof responseApi.drinks[0]
+                      ]
+                  ),
+              },
+            ]
+          : undefined;
       });
   }
 
-  searchDrinksByLetter(letter: string) {
+  setDrinksByFirstLetter(letter: string): void {
     this.http
       .get(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${letter}`)
       .subscribe((response) => {
-        this.drinksListApi = response as CocktailListApi;
-        this.drinksList = this.drinksListApi.drinks.map((drink) => ({
-          id: drink.idDrink,
-          name: drink.strDrink,
-          category: drink.strCategory,
-          image: drink.strDrinkThumb,
-        }));
+        let responseApi = response as CocktailListApi;
+        this.drinks = responseApi.drinks
+          ? responseApi.drinks.map((drink) => ({
+              id: drink.idDrink,
+              name: drink.strDrink,
+              category: drink.strCategory,
+              image: drink.strDrinkThumb,
+            }))
+          : undefined;
       });
   }
 
-  searchDrinksByIngredient(ingredient: string) {
+  setDrinksListByIngredient(ingredient: string): void {
     this.http
       .get(
         `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient}`
       )
       .subscribe((response) => {
-        const drinksListApi = response as CocktailSearchByIngredientApi;
-        this.drinkListByIngredient = drinksListApi.drinks.map((drink) => ({
-          id: drink.idDrink,
-          name: drink.strDrink,
-          image: drink.strDrinkThumb,
-        }));
+        let responseApi = response as CocktailByIngredientApi;
+        this.drinks = responseApi.drinks
+          ? responseApi.drinks.map((drink) => ({
+              id: drink.idDrink,
+              name: drink.strDrink,
+              image: drink.strDrinkThumb,
+            }))
+          : undefined;
       });
+  }
+
+  setDrinksOnChangeComponent(): void {
+    this.drinks = undefined;
   }
 }

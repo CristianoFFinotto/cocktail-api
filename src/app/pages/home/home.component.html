@@ -1,8 +1,24 @@
-<mat-toolbar style="display: flex; justify-content: space-between">
+<mat-toolbar
+  style="
+    display: flex;
+    justify-content: space-between;
+    background-color: #fff8ea;
+  "
+>
   <span>Cocktail Application</span>
-  <button mat-flat-button color="primary" (click)="onSearch()">Search</button>
+
+  <button
+    mat-flat-button
+    style="background-color: #594545; color: #fff8ea"
+    (click)="onSearch()"
+  >
+    <mat-icon aria-hidden="false" fontIcon="search"></mat-icon>
+  </button>
 </mat-toolbar>
-<mat-tab-group (selectedTabChange)="onChangeLetter($event)">
+<mat-tab-group
+  (selectedTabChange)="onChangeLetter($event)"
+  [selectedIndex]="controller.currentTabIndex"
+>
   <mat-tab *ngFor="let letter of letters" [label]="letter" class="mat-tab-label"
     ><app-media-box></app-media-box
   ></mat-tab>

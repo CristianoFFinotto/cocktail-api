@@ -1,23 +1,40 @@
-<div *ngIf="api.drinksList" class="container">
-  <mat-card class="example-card" *ngFor="let drink of api.drinksList">
-    <mat-card-header>
-      <div mat-card-avatar></div>
-      <mat-card-title class="example-header-title">{{
-        drink.name
-      }}</mat-card-title>
-      <mat-card-subtitle style="color: whitesmoke">{{
-        drink.category
-      }}</mat-card-subtitle>
-    </mat-card-header>
-    <img mat-card-image src="{{ drink.image }}" alt="Photo drink" />
-    <mat-card-actions class="example-actions">
-      <button
-        mat-raised-button
-        color="primary"
-        (click)="handleOnInfo(drink.id)"
-      >
-        Info
-      </button>
-    </mat-card-actions>
-  </mat-card>
+<div *ngIf="api.drinks; else notDrinksFound" class="container">
+  <div class="row">
+    <div
+      class="col my-5 p-5 p-sm-0 col-12 col-sm-6 col-md-4 col-lg-3"
+      style="display: flex; justify-content: center"
+      *ngFor="let drink of api.drinks"
+    >
+      <mat-card class="example-card">
+        <mat-card-header>
+          <div mat-card-avatar></div>
+          <mat-card-title class="example-header-title">{{
+            drink!.name
+          }}</mat-card-title>
+          <mat-card-subtitle style="color: #fff8ea">{{
+            drink!.category
+          }}</mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image src="{{ drink!.image }}" alt="Photo drink" />
+        <mat-card-actions class="example-actions">
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="handleOnInfo(drink!.id)"
+          >
+            Info
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
 </div>
+
+<ng-template #notDrinksFound>
+  <div
+    class="container"
+    style="height: 60vh; display: grid; place-items: center"
+  >
+    <span style="font-weight: bold; font-size: 2em">Drinks not found!</span>
+  </div>
+</ng-template>

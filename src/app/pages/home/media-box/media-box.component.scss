@@ -1,18 +1,17 @@
 .example-card {
-  max-width: 400px;
-  margin: 100px;
-  background-color: #3c4048;
-  color: #b2b2b2;
+  width: 80%;
+  background-color: #9e7676;
+  color: #fff8ea;
 }
 
 .example-header-image {
   background-size: cover;
 }
+
 .example-actions {
   text-align: end;
-}
 
-.container {
-  display: flex;
-  flex-wrap: wrap;
+  button {
+    background-color: #594545;
+  }
 }

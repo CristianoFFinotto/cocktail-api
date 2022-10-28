@@ -14,6 +14,4 @@ export class FilterComponent implements OnInit {
   onHome() {
     this.router.navigateByUrl(``);
   }
-
-  searchValue: string = '';
 }

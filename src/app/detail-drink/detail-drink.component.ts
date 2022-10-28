@@ -11,6 +11,10 @@ export class DetailDrinkComponent implements OnInit {
   constructor(public api: APIService, private router: Router) {}
 
   ngOnInit(): void {
-    this.api.searchDrinkById(this.router.url.split('/')[2]);
+    this.api.setDrinkById(this.router.url.split('/')[2]);
+  }
+
+  onSearch() {
+    this.router.navigateByUrl(`/filter`);
   }
 }
