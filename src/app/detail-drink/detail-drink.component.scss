@@ -1,0 +1,21 @@
+.container-drink-not-found {
+  height: 60vh;
+  display: grid;
+  place-items: center;
+
+  span {
+    font-weight: bold;
+    font-size: 2em;
+  }
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  background-color: #101820ff;
+  color: #fee715ff;
+
+  button {
+    background-color: #fee715ff;
+  }
+}

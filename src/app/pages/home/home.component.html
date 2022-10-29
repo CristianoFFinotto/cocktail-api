@@ -1,17 +1,7 @@
-<mat-toolbar
-  style="
-    display: flex;
-    justify-content: space-between;
-    background-color: #fff8ea;
-  "
->
-  <span>Cocktail Application</span>
+<mat-toolbar class="toolbar">
+  <span style="color: #fee715ff">Cocktail Application</span>
 
-  <button
-    mat-flat-button
-    style="background-color: #594545; color: #fff8ea"
-    (click)="onSearch()"
-  >
+  <button mat-flat-button (click)="onSearch()">
     <mat-icon aria-hidden="false" fontIcon="search"></mat-icon>
   </button>
 </mat-toolbar>

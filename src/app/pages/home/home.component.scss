@@ -7,3 +7,30 @@
 ::ng-deep.mat-tab-labels {
   justify-content: center;
 }
+
+::ng-deep.mat-ink-bar {
+  background-color: #fee715ff !important;
+}
+
+::ng-deep.mat-tab-label {
+  color: #fee715ff;
+  font-size: 1.4em;
+}
+
+::ng-deep.mat-tab-header {
+  button {
+    background-color: #fee715ff;
+    color: #101820ff;
+    border-radius: 5px;
+  }
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  background-color: #101820ff;
+  button {
+    background-color: #fee715ff;
+    color: #101820ff;
+  }
+}

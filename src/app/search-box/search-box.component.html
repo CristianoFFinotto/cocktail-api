@@ -1,51 +1,51 @@
-<div class="container">
-  <div class="row pt-5 mt-5" style="display: flex; justify-content: center">
-    <div
-      class="col col-7 col-sm-4 box"
-      [ngClass]="!sliderState ? 'active-search' : 'inactive-search'"
-    >
-      <mat-form-field appearance="fill">
-        <mat-label>Insert drink name</mat-label>
-        <input
-          matInput
-          placeholder=""
-          [disabled]="sliderState"
-          (input)="handleOnChangeInput($event)"
-        />
-      </mat-form-field>
+<form [formGroup]="form" (ngSubmit)="handleOnSearch()">
+  <div class="container">
+    <div class="row pt-5 mt-5" style="display: flex; justify-content: center">
+      <div
+        class="col col-7 col-sm-4 box"
+        [ngClass]="!sliderState ? 'active-search' : 'inactive-search'"
+      >
+        <form></form>
+        <mat-form-field appearance="fill">
+          <mat-label>Insert drink name</mat-label>
+          <input matInput placeholder="" formControlName="drinksName" />
+        </mat-form-field>
+      </div>
+      <div class="col col-7 col-sm-4 box">
+        <mat-slide-toggle
+          (change)="handleOnChangeToggle($event)"
+          [checked]="sliderState"
+        ></mat-slide-toggle>
+      </div>
+      <div
+        class="col col-7 col-sm-4 box"
+        [ngClass]="sliderState ? 'active-search' : 'inactive-search'"
+      >
+        <mat-form-field appearance="fill" class="item">
+          <mat-label>Select ingredients:</mat-label>
+          <mat-select formControlName="drinksIngredient">
+            <mat-option
+              *ngFor="let ingredient of ingredients"
+              [value]="ingredient"
+            >
+              {{ ingredient }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
     </div>
-    <div class="col col-7 col-sm-4 box">
-      <mat-slide-toggle
-        (change)="handleOnChangeToggle($event)"
-        [checked]="sliderState"
-      ></mat-slide-toggle>
-    </div>
-    <div
-      class="col col-7 col-sm-4 box"
-      [ngClass]="sliderState ? 'active-search' : 'inactive-search'"
-    >
-      <mat-form-field appearance="fill" class="item">
-        <mat-label>Select ingredients:</mat-label>
-        <mat-select
-          [disabled]="!sliderState"
-          (selectionChange)="handleOnChangeSelection($event)"
-        >
-          <mat-option
-            *ngFor="let ingredient of ingredients"
-            [value]="ingredient"
-          >
-            {{ ingredient }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-  </div>
 
-  <div class="row mt-5 pt-5" style="display: flex; justify-content: center">
-    <div class="col" style="text-align: center">
-      <button mat-flat-button color="primary" (click)="handleOnSearch()">
-        Search
-      </button>
+    <div class="row mt-5 pt-5" style="display: flex; justify-content: center">
+      <div class="col" style="text-align: center">
+        <button
+          mat-flat-button
+          style="background-color: #fee715ff; color: #101820ff"
+          type="submit"
+          [disabled]="!form.valid"
+        >
+          Search
+        </button>
+      </div>
     </div>
   </div>
-</div>
+</form>

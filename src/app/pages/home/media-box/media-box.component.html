@@ -11,9 +11,7 @@
           <mat-card-title class="example-header-title">{{
             drink!.name
           }}</mat-card-title>
-          <mat-card-subtitle style="color: #fff8ea">{{
-            drink!.category
-          }}</mat-card-subtitle>
+          <mat-card-subtitle>{{ drink!.category }}</mat-card-subtitle>
         </mat-card-header>
         <img mat-card-image src="{{ drink!.image }}" alt="Photo drink" />
         <mat-card-actions class="example-actions">
@@ -35,6 +33,8 @@
     class="container"
     style="height: 60vh; display: grid; place-items: center"
   >
-    <span style="font-weight: bold; font-size: 2em">Drinks not found!</span>
+    <span style="font-weight: bold; font-size: 2em; color: #fee715ff"
+      >Drinks not found!</span
+    >
   </div>
 </ng-template>

@@ -1,6 +1,6 @@
 import { ControllerService } from './../controller.service';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatInput } from '@angular/material/input';
 import { MatSelectChange } from '@angular/material/select';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
@@ -13,6 +13,22 @@ import { APIService } from '../api.service';
 })
 export class SearchBoxComponent implements OnInit {
   constructor(private api: APIService, public controller: ControllerService) {}
+  form = new FormGroup({
+    drinksName: new FormControl(
+      {
+        value: this.controller.currentSearchName,
+        disabled: this.controller.currentToggleState ? true : false,
+      },
+      Validators.required
+    ),
+    drinksIngredient: new FormControl(
+      {
+        value: this.controller.currentSearchIngredient,
+        disabled: this.controller.currentToggleState ? false : true,
+      },
+      Validators.required
+    ),
+  });
 
   ngOnInit(): void {
     if (this.controller.currentSearchName) {
@@ -133,27 +149,30 @@ export class SearchBoxComponent implements OnInit {
   sliderState = false;
   searchData: string = '';
 
-  handleOnChangeInput(e: Event) {
-    this.searchData = (e.target as HTMLInputElement).value;
-  }
-
-  handleOnChangeSelection(e: MatSelectChange) {
-    this.searchData = e.value;
-  }
-
   handleOnChangeToggle(e: MatSlideToggleChange) {
     this.sliderState = e.checked;
     this.controller.currentToggleState = e.checked;
+
+    if (this.sliderState) {
+      this.form.controls.drinksName.disable();
+      this.form.controls.drinksIngredient.enable();
+    } else {
+      this.form.controls.drinksName.enable();
+      this.form.controls.drinksIngredient.disable();
+    }
   }
 
   handleOnSearch() {
     if (this.sliderState) {
-      this.api.setDrinksListByIngredient(this.searchData);
-      this.controller.currentSearchIngredient = this.searchData;
+      this.api.setDrinksListByIngredient(
+        this.form.get('drinksIngredient')!.value!
+      );
+      this.controller.currentSearchIngredient =
+        this.form.get('drinksIngredient')!.value!;
       this.controller.currentSearchName = '';
     } else {
-      this.api.setDrinksByName(this.searchData);
-      this.controller.currentSearchName = this.searchData;
+      this.api.setDrinksByName(this.form.get('drinksName')!.value!);
+      this.controller.currentSearchName = this.form.get('drinksName')!.value!;
       this.controller.currentSearchIngredient = '';
     }
   }

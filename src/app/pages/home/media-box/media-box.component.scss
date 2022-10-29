@@ -1,7 +1,7 @@
 .example-card {
   width: 80%;
-  background-color: #9e7676;
-  color: #fff8ea;
+  background-color: #101820ff;
+  color: #fee715ff;
 }
 
 .example-header-image {
@@ -12,6 +12,15 @@
   text-align: end;
 
   button {
-    background-color: #594545;
+    color: #101820ff;
+    background-color: #fee715ff;
   }
+}
+
+::ng-deep.mat-card-avatar {
+  display: none;
+}
+
+.mat-card-subtitle {
+  color: #fff8ea;
 }
