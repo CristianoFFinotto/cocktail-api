@@ -62,6 +62,25 @@ export type CocktailByIngredientApi = {
   ];
 };
 
+export type IngredientDetailApi = {
+  ingredients: [
+    {
+      strIngredient: string;
+      strDescription?: string;
+      strType?: string;
+      strAlcohol?: string;
+    }
+  ];
+};
+
+export type IngredientDetail = {
+  name: string;
+  description: string;
+  type: string;
+  alcohol: string;
+  image: string;
+};
+
 @Injectable({
   providedIn: 'root',
 })
@@ -69,6 +88,7 @@ export class APIService {
   constructor(private http: HttpClient) {}
 
   drinks: CocktailList[] | undefined = undefined;
+  ingredient: IngredientDetail | undefined = undefined;
 
   setDrinksByName(drink: string): void {
     this.http
@@ -149,6 +169,30 @@ export class APIService {
               name: drink.strDrink,
               image: drink.strDrinkThumb,
             }))
+          : undefined;
+      });
+  }
+
+  setIngredientByName(ingredient: string): void {
+    this.http
+      .get(
+        `https://www.thecocktaildb.com/api/json/v1/1/search.php?i=${ingredient}`
+      )
+      .subscribe((response) => {
+        let responseApi = response as IngredientDetailApi;
+        this.ingredient = responseApi
+          ? {
+              name: responseApi.ingredients[0].strIngredient,
+              description:
+                responseApi.ingredients[0].strDescription ||
+                'no description available',
+              alcohol:
+                responseApi.ingredients[0].strAlcohol ||
+                'no alcohol info available',
+              type:
+                responseApi.ingredients[0].strType || 'no type info available',
+              image: '',
+            }
           : undefined;
       });
   }

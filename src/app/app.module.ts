@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { DetailDrinkComponent } from './detail-drink/detail-drink.component';
 import { HomeComponent } from './pages/home/home.component';
 import { FilterComponent } from './filter/filter.component';
+import { DetailIngredientComponent } from './detail-ingredient/detail-ingredient.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { FilterComponent } from './filter/filter.component';
     DetailDrinkComponent,
     HomeComponent,
     FilterComponent,
+    DetailIngredientComponent,
   ],
   imports: [
     BrowserModule,

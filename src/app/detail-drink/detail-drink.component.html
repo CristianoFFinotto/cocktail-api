@@ -23,7 +23,7 @@
       <p>{{ api.drinks[0].instructions }}</p>
       <h2>Ingredients</h2>
       <li *ngFor="let ingredient of api.drinks[0].ingredients">
-        {{ ingredient }}
+        <a [routerLink]="'/ingredient/' + ingredient">{{ ingredient }}</a>
       </li>
     </div>
   </div>

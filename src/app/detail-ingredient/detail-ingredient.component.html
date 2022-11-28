@@ -1,0 +1,34 @@
+<div style="color: yellow" class="container">
+  <div class="row" style="margin-top: 5vh">
+    <div class="col col-12 col-md-6">
+      <img
+        [src]="
+          'https://www.thecocktaildb.com/images/ingredients/' +
+            ingredient +
+            '-Medium.png' || '/assets/No_Image_Available.jpg'
+        "
+      />
+    </div>
+    <div class="col col-12 col-md-6">
+      <p>
+        <span style="font-size: 1.5em">Name:</span>
+        {{ this.api.ingredient?.name }}
+      </p>
+      <p>
+        <span style="font-size: 1.5em">Description:</span>
+        <br />
+        {{ this.api.ingredient?.description }}
+      </p>
+      <p>
+        <span style="font-size: 1.5em">Type:</span>
+        {{ this.api.ingredient?.type }}
+      </p>
+      <p>
+        <span style="font-size: 1.5em">Alcohol:</span>
+        {{ this.api.ingredient?.alcohol }}
+      </p>
+    </div>
+  </div>
+</div>
+
+<app-media-box></app-media-box>
