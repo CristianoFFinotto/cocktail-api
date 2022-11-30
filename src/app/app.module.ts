@@ -12,6 +12,8 @@ import { DetailDrinkComponent } from './detail-drink/detail-drink.component';
 import { HomeComponent } from './pages/home/home.component';
 import { FilterComponent } from './filter/filter.component';
 import { DetailIngredientComponent } from './detail-ingredient/detail-ingredient.component';
+import { BlockUIModule } from 'ng-block-ui';
+import { BlockUIHttpModule } from 'ng-block-ui/http';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,8 @@ import { DetailIngredientComponent } from './detail-ingredient/detail-ingredient
     AngularMaterialModule,
     HttpClientModule,
     ReactiveFormsModule,
+    BlockUIModule.forRoot(),
+    BlockUIHttpModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent],
